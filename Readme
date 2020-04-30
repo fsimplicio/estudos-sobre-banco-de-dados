@@ -1,0 +1,11 @@
+Estudos Sobre Banco de Dados
+
+Este repositório foi criado para alocar artigos e scripts que foram gerados durante estudos sobre Banco de Dados. 
+
+Os estudos vão desde a análise de um MER (Modelo Entidade Relacionamento) ao desenvolvimento de scripts SQL e PL-SQL. 
+
+O gerenciador de banco de dados utilizados foi o oracle 12c Enterprise Edition.
+
+Link para download: https://www.oracle.com/br/database/technologies/oracle-database-software-downloads.html
+
+OBS: Este link contém outras versões do banco de dados, sendo que isso não terá impacto, fique a vontade para escolher a versão que melhor atender suas necessidades. 
