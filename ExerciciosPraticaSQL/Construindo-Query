@@ -1,0 +1,64 @@
+-- Atenção para o exemplo abaixo foi utilizado a base de dados Human Resourses disponibilizado pela oracle para estudos. 
+
+-- 1) Utilize a cláusula DISTINCT em ma tabela:
+-- Faça uma QUERY que retorne apenas uma linha por codigo do departamento da tabela empregado. 
+
+SELECT DISTINCT DEPARTMENT_ID
+FROM EMPLOYEES;
+
+-- 2) Utilize a clásula WHERE em uma tabela:
+-- Retorne os funcionários que não possuem um gerente 
+
+SELECT * FROM EMPLOYEES
+WHERE manager_id IS NULL;
+
+-- 3) Recupere o nome completo, o cargo e o número do departamento de todos os funcionários cujo cargo é CLERK.  
+
+SELECT e.first_name || ' ' || e.last_name Nome , j.job_title Cargo, e.department_id Departamento
+FROM employees e, jobs j
+WHERE e.job_id = j.job_id
+AND j.JOB_TITLE LIKE '%Clerk%';
+
+-- 4) Vincule as colunas nome funcionário e cargo e utilize Strings literias na query anterior.
+
+SELECT e.first_name || ' ' || e.last_name || ' is ' || j.job_title || ' Works in ' || d.department_name Funcionários_Departamento_Clerk
+FROM employees e, jobs j, departments d
+WHERE e.department_id= d.department_id
+AND   e.job_id = j.job_id
+AND   j.JOB_TITLE LIKE '%Clerk%';
+
+-- 5) Recupere o nome, salário e comissão da tabela EMPREGADO, em que o salário do funcionário é menor ou igual à quantia da comissão.
+SELECT e.first_name || ' ' || e.last_name Nome, e.salary Salario, e.commission_PCT Comissao
+FROM employees e
+WHERE e.salary <= e.COMMISSION_PCT;
+
+-- 6) Recupere o nome, salário e comissão da tabela EMPREGADO, que recebem comissão.
+SELECT e.first_name || ' ' || e.last_name Nome, e.salary Salario, e.commission_PCT Comissao
+FROM employees e
+WHERE  e.COMMISSION_PCT IS NOT NULL;
+
+-- 7) Recupere o nome, salário, comissão e o nome do departamento da tabela EMPREGADO e DEPARTAMENTO, que recebem comissão.
+SELECT e.first_name || ' ' || e.last_name Nome, e.salary Salario, e.commission_PCT Comissao, d.department_name
+FROM employees e, departments d
+WHERE e.DEPARTMENT_ID = d.DEPARTMENT_ID
+AND e.COMMISSION_PCT IS NOT NULL;
+
+-- 8) Retorne as linhas da tabela EMPREGADO para qualquer funcionário cujo salário esteja entre US$2.100 e US$3.000.
+SELECT * FROM employees 
+WHERE salary BETWEEN 2100 AND 3000;
+
+-- 9)  Retorne nome do funcionário, cargo, o código do gerente responsável e nome do departamento das tabelas EMPLOYEES, JOBS e DEPARTMENTS para qualquer funcionário cujo salário esteja entre US$2.100 e US$3.000.
+
+SELECT e.first_name || ' ' || e.last_name Funcionario, j.job_title Cargo, d.department_name Departamento, e.manager_id Cod_gerente
+FROM employees e, jobs j, departments d
+WHERE e.JOB_ID = j.JOB_ID
+AND   e.DEPARTMENT_ID = d.DEPARTMENT_ID
+AND   (salary BETWEEN 2100 AND 3000);
+
+-- 10) Exibindo Nome, código e cargo de todos os gerentese a quantidade de subordinados. 
+SELECT m.manager_id Cod_Gerente, e.first_name || ' ' || e.last_name Nome, j.job_title Cargo, m.Quantidade QTD_Funcionários
+FROM (SELECT manager_id, COUNT(manager_id) Quantidade
+      FROM employees
+      GROUP BY manager_id) m, employees e, jobs j
+WHERE e.employee_id = m.manager_id
+AND   e.JOB_ID      = j.JOB_ID;
